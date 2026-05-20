@@ -13,9 +13,11 @@ void main() {
     expect(find.text('requestDirectoryUri()'), findsOneWidget);
     expect(find.text('Selected directory: null'), findsOneWidget);
     expect(
-        find.text(
-            "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))"),
-        findsOneWidget);
+      find.text(
+        "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))",
+      ),
+      findsOneWidget,
+    );
     expect(find.byType(ListTile), findsNWidgets(2));
   });
 
@@ -49,12 +51,17 @@ void main() {
     expect(plugin.methodInvokeHistory, hasLength(1));
     expect(plugin.methodInvokeHistory[0], 'requestDirectoryUri');
 
-    await tester.tap(find.text(
-        "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))"));
+    await tester.tap(
+      find.text(
+        "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))",
+      ),
+    );
     await tester.pump();
     expect(plugin.methodInvokeHistory, hasLength(2));
-    expect(plugin.methodInvokeHistory[1],
-        'writeFile(test://uri,test.txt,text/plain, [84, 101, 115, 116, 32, 116, 101, 120, 116])');
+    expect(
+      plugin.methodInvokeHistory[1],
+      'writeFile(test://uri,test.txt,text/plain, [84, 101, 115, 116, 32, 116, 101, 120, 116])',
+    );
   });
 }
 
@@ -72,7 +79,11 @@ class MockPersistentUserDirAccessAndroid
 
   @override
   Future<bool> writeFile(
-      String dirUri, String fileName, String mimeType, Uint8List data) async {
+    String dirUri,
+    String fileName,
+    String mimeType,
+    Uint8List data,
+  ) async {
     methodInvokeHistory.add('writeFile($dirUri,$fileName,$mimeType, $data)');
     return writeFileResult;
   }

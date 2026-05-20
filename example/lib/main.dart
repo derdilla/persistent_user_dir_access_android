@@ -28,31 +28,35 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: const Text('User dir sample app'),
-      ),
-      body: ListView(
-        children: [
-          Card(child: Text('Selected directory: $_uri')),
-          ListTile(
-            title: const Text('requestDirectoryUri()'),
-            onTap: () async {
-              final dirUri = await widget.userDirs.requestDirectoryUri();
-              setState(() {
-                _uri = dirUri;
-              });
-            },
+    appBar: AppBar(title: const Text('User dir sample app')),
+    body: ListView(
+      children: [
+        Card(child: Text('Selected directory: $_uri')),
+        ListTile(
+          title: const Text('requestDirectoryUri()'),
+          onTap: () async {
+            final dirUri = await widget.userDirs.requestDirectoryUri();
+            setState(() {
+              _uri = dirUri;
+            });
+          },
+        ),
+        ListTile(
+          title: const Text(
+            "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))",
           ),
-          ListTile(
-            title: const Text(
-                "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Test text'))"),
-            onTap: _uri == null
-                ? null
-                : () async {
-              await widget.userDirs.writeFile(_uri!, 'test.txt',
-                  'text/plain', utf8.encode('Test text'));
-            },
-          )
-        ],
-      ));
+          onTap: _uri == null
+              ? null
+              : () async {
+                  await widget.userDirs.writeFile(
+                    _uri!,
+                    'test.txt',
+                    'text/plain',
+                    utf8.encode('Test text'),
+                  );
+                },
+        ),
+      ],
+    ),
+  );
 }
