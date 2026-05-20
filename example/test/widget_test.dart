@@ -61,7 +61,7 @@ void main() {
 class MockPersistentUserDirAccessAndroid
     implements PersistentUserDirAccessAndroid {
   final List<String> methodInvokeHistory = [];
-  String? sampleUri = null;
+  String? sampleUri;
   bool writeFileResult = true;
 
   @override

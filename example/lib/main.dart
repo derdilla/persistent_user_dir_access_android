@@ -49,9 +49,9 @@ class _AppState extends State<App> {
             onTap: _uri == null
                 ? null
                 : () async {
-                    await widget.userDirs.writeFile(_uri!, 'test.txt',
-                        'text/plain', utf8.encode('Test text'));
-                  },
+              await widget.userDirs.writeFile(_uri!, 'test.txt',
+                  'text/plain', utf8.encode('Test text'));
+            },
           )
         ],
       ));
