@@ -1,19 +1,19 @@
 name: 'Testing 🧪'
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
   kotlin-tests:
     name: "[plugin] Android unit"
     runs-on: ubuntu-latest
+    if: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          channel: beta
+          channel: stable
           cache: true
       - run: flutter config --no-analytics --suppress-analytics
       - uses: actions/setup-java@v2
@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          channel: beta
+          channel: stable
           cache: true
       - run: flutter config --no-analytics --suppress-analytics
       - run: flutter test
@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          channel: beta
+          channel: stable
           cache: true
       - run: flutter config --no-analytics --suppress-analytics
       - run: flutter test

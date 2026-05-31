@@ -1,18 +1,17 @@
 name: 'Code quality 📝'
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
   dart-lints:
     name: "Dart linting"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: subosito/flutter-action@v2
         with:
-          channel: beta
+          channel: stable
           cache: true
       - run: flutter config --no-analytics --suppress-analytics
       - name: "Plugin lints"
@@ -22,10 +21,14 @@ jobs:
         working-directory: example
   dart-format:
     name: "Dart format"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1
+      - uses: actions/checkout@v6
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter config --no-analytics --suppress-analytics
       - name: "Plugin format"
         run: dart format --output show  --set-exit-if-changed .
       - name: "Example format"
