@@ -18,7 +18,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(find.byType(ListTile), findsNWidgets(2));
+    expect(find.byType(ListTile), findsNWidgets(3));
   });
 
   testWidgets('Calls requestDirectoryUri', (WidgetTester tester) async {
