@@ -103,20 +103,23 @@ class PersistentUserDirAccessAndroidPlugin: FlutterPlugin, MethodCallHandler, Ac
     val fileName = call.argument<String>("name")
     val mimeType = call.argument<String>("mime")
     val data = call.argument<ByteArray>("data")
-    if (dir == null || mimeType == null || fileName == null || data == null) {
+    val overwrite = call.argument<Boolean>("overwrite");
+    if (dir == null || mimeType == null || fileName == null || data == null || overwrite == null) {
       result.error("ArgErr", "Wrong writeFile arguments passed to native implementation", null)
       return
     }
 
     // Not compiled for older platform versions so true assert is fine
     val dirUri = DocumentFile.fromTreeUri(activity!!.activity.applicationContext, Uri.parse(dir))!!
-    val file = try {
-      dirUri.createFile(mimeType, fileName)
-    } catch (e: UnsupportedOperationException) {
-      result.error("IOErr", e.message, null)
-      return
-    }!!
-
+    
+    val file = (if (overwrite) dirUri.findFile(fileName) else null) 
+      ?: try {
+        dirUri.createFile(mimeType, fileName)
+      } catch (e: UnsupportedOperationException) {
+        result.error("IOErr", e.message, null)
+        return
+      }!!
+      
     // Open file to write. Existing content will be truncated
     try {
       activity!!.activity.contentResolver.openOutputStream(file.uri, "wt").use { stream ->
