@@ -56,6 +56,22 @@ class _AppState extends State<App> {
                   );
                 },
         ),
+        ListTile(
+          title: const Text(
+            "writeFile(uri, 'test.txt', 'text/plain', utf8.encode('Overwrite test'), true)",
+          ),
+          onTap: _uri == null
+              ? null
+              : () async {
+                  await widget.userDirs.writeFile(
+                    _uri!,
+                    'test.txt',
+                    'text/plain',
+                    utf8.encode('Overwrite test'),
+                    true
+                  );
+                },
+        ),
       ],
     ),
   );
