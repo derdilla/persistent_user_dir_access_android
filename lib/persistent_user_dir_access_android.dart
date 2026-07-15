@@ -42,7 +42,7 @@ class PersistentUserDirAccessAndroid {
   ///
   /// Returns success state of the operation.
   Future<bool> writeFile(
-      String dirUri, String fileName, String mimeType, Uint8List data) async {
+      String dirUri, String fileName, String mimeType, Uint8List data, [bool overwrite = false]) async {
     try {
       final res =
           await _channel.invokeMethod<bool>('writeFile', <String, dynamic>{
@@ -50,6 +50,7 @@ class PersistentUserDirAccessAndroid {
         'name': fileName,
         'mime': mimeType,
         'data': data,
+        'overwrite': overwrite,
       });
       return res ?? false;
     } on PlatformException catch (e) {

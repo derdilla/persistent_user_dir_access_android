@@ -60,7 +60,7 @@ void main() {
     expect(plugin.methodInvokeHistory, hasLength(2));
     expect(
       plugin.methodInvokeHistory[1],
-      'writeFile(test://uri,test.txt,text/plain, [84, 101, 115, 116, 32, 116, 101, 120, 116])',
+      'writeFile(test://uri,test.txt,text/plain, [84, 101, 115, 116, 32, 116, 101, 120, 116], false)',
     );
   });
 }
@@ -83,8 +83,9 @@ class MockPersistentUserDirAccessAndroid
     String fileName,
     String mimeType,
     Uint8List data,
+    [bool overwrite = false]
   ) async {
-    methodInvokeHistory.add('writeFile($dirUri,$fileName,$mimeType, $data)');
+    methodInvokeHistory.add('writeFile($dirUri,$fileName,$mimeType, $data, $overwrite)');
     return writeFileResult;
   }
 }
